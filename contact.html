@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Ange Michel Ouraga</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ===== CONTACT PAGE ===== */
+.contact-main{padding:80px 6% 120px;background:var(--bg2)}
+.contact-layout{display:grid;grid-template-columns:1fr 1.1fr;gap:80px;align-items:start}
+
+/* INFOS CONTACT */
+.contact-info{}
+.contact-info-txt{font-size:16px;color:var(--muted);line-height:1.9;margin-bottom:40px}
+.contact-info-txt strong{color:var(--txt);font-weight:500}
+
+.contact-cards{display:flex;flex-direction:column;gap:14px}
+.contact-card{display:flex;align-items:center;gap:16px;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:16px;text-decoration:none;cursor:none;transition:border-color .3s,transform .3s var(--ease),background .3s}
+.contact-card:hover{border-color:rgba(0,229,255,.3);background:rgba(0,229,255,.04);transform:translateX(6px)}
+.contact-card-icon{width:46px;height:46px;border-radius:12px;background:rgba(0,229,255,.07);border:1px solid rgba(0,229,255,.12);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.contact-card-icon.wa{background:rgba(74,222,128,.07);border-color:rgba(74,222,128,.12)}
+.contact-card-icon.gh{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08)}
+.contact-card-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:2px}
+.contact-card-value{font-size:14px;font-weight:600;color:var(--txt)}
+.contact-card-arrow{margin-left:auto;color:var(--muted);font-size:12px;transition:transform .3s,color .3s}
+.contact-card:hover .contact-card-arrow{transform:translateX(4px);color:var(--accent)}
+
+/* Disponibilité */
+.avail-banner{margin-top:28px;padding:18px 20px;background:rgba(74,222,128,.05);border:1px solid rgba(74,222,128,.2);border-radius:14px;display:flex;align-items:center;gap:12px}
+.avail-dot{width:8px;height:8px;border-radius:50%;background:#4ade80;flex-shrink:0;animation:pulse 2s ease infinite}
+.avail-txt{font-size:14px;color:var(--txt)}
+.avail-txt span{color:#4ade80;font-weight:600}
+
+/* FORMULAIRE */
+.contact-form-wrap{}
+.form-title{font-family:var(--font-h);font-size:22px;font-weight:700;color:var(--txt);margin-bottom:8px}
+.form-sub{font-size:14px;color:var(--muted);margin-bottom:28px}
+
+.contact-form{display:flex;flex-direction:column;gap:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:7px}
+.form-group label{font-size:11px;font-weight:700;letter-spacing:.9px;text-transform:uppercase;color:var(--muted)}
+.form-group input,
+.form-group textarea,
+.form-group select{
+  background:var(--surface);border:1px solid var(--border);border-radius:12px;
+  padding:13px 16px;color:var(--txt);font-family:var(--font-b);font-size:14px;
+  outline:none;resize:none;-webkit-appearance:none;
+  transition:border-color .3s,box-shadow .3s,background .3s
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder{color:var(--muted)}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(0,229,255,.07);
+  background:rgba(0,229,255,.015)
+}
+.form-group textarea{height:130px}
+.form-group select option{background:var(--surface);color:var(--txt)}
+
+/* Sélecteur d'envoi */
+.send-via{display:flex;gap:10px;flex-wrap:wrap}
+.via-btn{flex:1;min-width:100px;display:flex;align-items:center;justify-content:center;gap:7px;padding:11px 14px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--muted);font-size:13px;font-weight:600;cursor:none;transition:all .25s;font-family:var(--font-b)}
+.via-btn.active{border-color:var(--accent);background:rgba(0,229,255,.08);color:var(--accent)}
+.via-btn:hover{border-color:rgba(0,229,255,.35);color:var(--txt)}
+
+.btn-submit{display:inline-flex;align-items:center;gap:10px;padding:15px 30px;border:none;background:var(--accent);color:var(--bg);font-family:var(--font-b);font-size:14px;font-weight:700;border-radius:100px;cursor:none;align-self:flex-start;transition:transform .3s var(--ease),box-shadow .3s,background .3s}
+.btn-submit:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,229,255,.3)}
+.btn-submit:disabled{opacity:.7;transform:none}
+
+/* FAQ */
+.faq-section{padding:80px 6% 100px;background:var(--bg)}
+.faq-list{display:flex;flex-direction:column;gap:12px;margin-top:48px;max-width:720px}
+.faq-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .3s}
+.faq-item:hover{border-color:rgba(0,229,255,.18)}
+.faq-q{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;font-size:15px;font-weight:600;color:var(--txt);cursor:none;gap:16px}
+.faq-icon{color:var(--accent);font-size:18px;flex-shrink:0;transition:transform .4s var(--ease)}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .5s var(--ease);padding:0 24px}
+.faq-item.open .faq-a{max-height:200px;padding-bottom:20px}
+.faq-a p{font-size:14px;color:var(--muted);line-height:1.8}
+.faq-a a{color:var(--accent);text-decoration:none}
+
+@media(max-width:768px){.contact-layout{grid-template-columns:1fr;gap:48px}.form-row{grid-template-columns:1fr}.send-via{flex-direction:column}}
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<nav id="navbar">
+  <a href="index.html" class="logo">Ange<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="about.html">À propos</a></li>
+    <li><a href="skills.html">Compétences</a></li>
+    <li><a href="projects.html">Projets</a></li>
+    <li><a href="awards.html">Récompenses</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Me contacter</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Accueil</a>
+  <a href="about.html">À propos</a>
+  <a href="skills.html">Compétences</a>
+  <a href="projects.html">Projets</a>
+  <a href="awards.html">Récompenses</a>
+  <a href="contact.html" class="active">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-grid"></div>
+  <div class="page-orb page-orb-1"></div>
+  <div class="page-orb page-orb-2"></div>
+  <p class="page-hero-label">Contact</p>
+  <h1 class="page-hero-title">Travaillons<br><em>ensemble</em>.</h1>
+  <p class="page-hero-sub">Un projet, une idée, une question ? Je réponds généralement dans les <strong>24 heures</strong>.</p>
+</section>
+
+<!-- CONTACT MAIN -->
+<section class="contact-main">
+  <div class="contact-layout">
+
+    <!-- INFO CONTACT -->
+    <div>
+      <p class="section-label reveal">Mes coordonnées</p>
+      <p class="contact-info-txt reveal reveal-delay-1">
+        Que ce soit pour un <strong>site web</strong>, une <strong>application</strong>, un <strong>design UI/UX</strong> ou une simple question — je suis là. Choisissez le canal qui vous convient.
+      </p>
+
+      <div class="contact-cards">
+        <a href="https://wa.me/2250151185932" target="_blank" rel="noopener" class="contact-card reveal">
+          <div class="contact-card-icon wa">💬</div>
+          <div>
+            <div class="contact-card-label">WhatsApp</div>
+            <div class="contact-card-value">+225 01 51 18 59 32</div>
+          </div>
+          <span class="contact-card-arrow">→</span>
+        </a>
+
+        <a href="/cdn-cgi/l/email-protection#6f001a1d0e080e0e01080a02060c070a035d59582f08020e0603410c0002" class="contact-card reveal reveal-delay-1">
+          <div class="contact-card-icon">✉️</div>
+          <div>
+            <div class="contact-card-label">Email</div>
+            <div class="contact-card-value"><span class="__cf_email__" data-cfemail="fe918b8c9f999f9f90999b93979d969b92ccc8c9be99939f9792d09d9193">[email&#160;protected]</span></div>
+          </div>
+          <span class="contact-card-arrow">→</span>
+        </a>
+
+        <a href="https://github.com/tiefsalvador19" target="_blank" rel="noopener" class="contact-card reveal reveal-delay-2">
+          <div class="contact-card-icon gh">⚡</div>
+          <div>
+            <div class="contact-card-label">GitHub</div>
+            <div class="contact-card-value">tiefsalvador19</div>
+          </div>
+          <span class="contact-card-arrow">→</span>
+        </a>
+
+        <div class="contact-card reveal reveal-delay-3" style="cursor:default">
+          <div class="contact-card-icon">📍</div>
+          <div>
+            <div class="contact-card-label">Localisation</div>
+            <div class="contact-card-value">Abidjan, Côte d'Ivoire</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="avail-banner reveal reveal-delay-4">
+        <div class="avail-dot"></div>
+        <div class="avail-txt"><span>Disponible</span> pour de nouveaux projets freelance ou collaboration</div>
+      </div>
+    </div>
+
+    <!-- FORMULAIRE -->
+    <div class="contact-form-wrap reveal reveal-delay-2">
+      <div class="form-title">Envoyer un message</div>
+      <div class="form-sub">Le formulaire envoie directement via WhatsApp ou Email — pas de serveur requis.</div>
+
+      <form class="contact-form" id="contactForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="fname">Nom complet</label>
+            <input type="text" id="fname" placeholder="Jean Dupont" required>
+          </div>
+          <div class="form-group">
+            <label for="femail">Votre email</label>
+            <input type="email" id="femail" placeholder="jean@exemple.com" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="fsujet">Type de projet</label>
+          <select id="fsujet" required>
+            <option value="">-- Choisissez --</option>
+            <option value="Site web vitrine">Site web vitrine</option>
+            <option value="Application web">Application web</option>
+            <option value="Design UI/UX">Design UI/UX</option>
+            <option value="Refonte de site">Refonte de site</option>
+            <option value="Autre demande">Autre demande</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="fmsg">Votre message</label>
+          <textarea id="fmsg" placeholder="Décrivez votre projet, vos besoins, votre budget approximatif…" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Envoyer via</label>
+          <div class="send-via">
+            <button type="button" class="via-btn active" id="viaWA" onclick="selectVia('whatsapp')">💬 WhatsApp</button>
+            <button type="button" class="via-btn" id="viaEM" onclick="selectVia('email')">✉️ Email</button>
+            <button type="button" class="via-btn" id="viaBOTH" onclick="selectVia('both')">🚀 Les deux</button>
+          </div>
+        </div>
+
+        <button type="button" class="btn-submit" id="submitBtn" onclick="sendMessage()">
+          Envoyer le message <span>→</span>
+        </button>
+      </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <p class="section-label reveal">FAQ</p>
+  <h2 class="section-title reveal reveal-delay-1">Questions <em>fréquentes</em>.</h2>
+
+  <div class="faq-list">
+    <div class="faq-item reveal">
+      <div class="faq-q" onclick="toggleFaq(this)">Quels types de projets acceptes-tu ? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>Sites vitrines, applications web, plateformes de gestion, landing pages, design UI/UX, refonte de sites existants. Je suis ouvert à tout projet web qui nécessite soin et créativité.</p></div>
+    </div>
+    <div class="faq-item reveal reveal-delay-1">
+      <div class="faq-q" onclick="toggleFaq(this)">Quel est ton délai de réponse ? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>Je réponds en général dans les <strong>24h</strong> en semaine. Via WhatsApp, c'est souvent plus rapide — quelques heures seulement.</p></div>
+    </div>
+    <div class="faq-item reveal reveal-delay-2">
+      <div class="faq-q" onclick="toggleFaq(this)">Travailles-tu en freelance ? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>Oui, je suis disponible pour des missions freelance, des collaborations sur des projets en équipe, ou des stages. Contacte-moi pour discuter de ta situation.</p></div>
+    </div>
+    <div class="faq-item reveal reveal-delay-3">
+      <div class="faq-q" onclick="toggleFaq(this)">Comment fonctionne le formulaire de contact ? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>Le formulaire génère un message pré-rempli et l'ouvre dans <strong>WhatsApp</strong> ou ton <strong>client email</strong>. Pas de serveur requis — tu envoies toi-même depuis ton app. C'est simple et direct.</p></div>
+    </div>
+    <div class="faq-item reveal reveal-delay-4">
+      <div class="faq-q" onclick="toggleFaq(this)">Peux-tu travailler à distance ? <span class="faq-icon">+</span></div>
+      <div class="faq-a"><p>Absolument. Je travaille 100% à distance avec des clients partout en Côte d'Ivoire et en Afrique francophone. La communication se fait par WhatsApp, email ou visioconférence.</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Ange<span>.</span></div>
+  <p class="footer-copy">© 2026 Ange Michel Ouraga</p>
+  <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" class="footer-back">↑ Haut de page</a>
+</footer>
+<div class="toast" id="toast"></div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="shared.js"></script>
+<script>

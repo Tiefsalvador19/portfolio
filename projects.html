@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projets — Ange Michel Ouraga</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ===== PROJECTS PAGE ===== */
+.projects-main{padding:80px 6% 120px;background:var(--bg2)}
+
+/* Filtres */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:52px}
+.filter-btn{padding:9px 20px;border:1px solid var(--border);border-radius:100px;background:none;color:var(--muted);font-family:var(--font-b);font-size:13px;font-weight:500;cursor:none;transition:all .25s}
+.filter-btn:hover{border-color:rgba(0,229,255,.3);color:var(--txt)}
+.filter-btn.active{border-color:var(--accent);background:rgba(0,229,255,.08);color:var(--accent)}
+
+/* Grille projets */
+.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+
+/* Carte projet */
+.project-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;cursor:none;transition:border-color .4s,transform .5s var(--ease),box-shadow .5s;display:flex;flex-direction:column}
+.project-card:hover{border-color:rgba(0,229,255,.3);transform:translateY(-8px);box-shadow:0 30px 60px rgba(0,0,0,.4),0 0 0 1px rgba(0,229,255,.08)}
+.project-card.featured{grid-column:span 2}
+
+.project-thumb{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#0D1B2A,#1A2D45);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.project-card.featured .project-thumb{aspect-ratio:21/9}
+.project-thumb img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .8s var(--ease)}
+.project-card:hover .project-thumb img{transform:scale(1.05) translateY(-8px)}
+.proj-placeholder{font-family:var(--font-h);font-size:44px;font-weight:800;color:rgba(0,229,255,.09);letter-spacing:-2px;position:absolute;user-select:none;transition:opacity .3s}
+.project-card:hover .proj-placeholder{opacity:.05}
+.proj-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(160deg,transparent 45%,rgba(0,0,0,.55) 100%)}
+.project-tag{position:absolute;top:14px;left:14px;z-index:3;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent);background:rgba(0,229,255,.09);border:1px solid rgba(0,229,255,.22);padding:5px 12px;border-radius:100px}
+
+/* Live badge */
+.live-badge{position:absolute;top:14px;right:14px;z-index:3;display:flex;align-items:center;gap:5px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#4ade80;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.22);padding:5px 10px;border-radius:100px}
+.live-dot{width:5px;height:5px;border-radius:50%;background:#4ade80;animation:pulse 2s ease infinite}
+
+.project-body{padding:24px;flex:1;display:flex;flex-direction:column}
+.project-title{font-family:var(--font-h);font-size:19px;font-weight:700;line-height:1.3;margin-bottom:10px;color:var(--txt)}
+.project-desc{font-size:14px;color:var(--muted);line-height:1.75;flex:1;margin-bottom:20px}
+.project-footer{display:flex;align-items:center;justify-content:space-between;padding-top:16px;border-top:1px solid var(--border);gap:12px}
+.project-techs{display:flex;gap:6px;flex-wrap:wrap}
+.tech-tag{font-size:10px;font-weight:600;color:var(--muted);background:rgba(255,255,255,.04);padding:3px 9px;border-radius:100px;border:1px solid var(--border)}
+.project-link{display:flex;align-items:center;justify-content:center;width:36px;height:36px;flex-shrink:0;border:1px solid var(--border);border-radius:50%;color:var(--muted);text-decoration:none;font-size:13px;transition:background .3s,border-color .3s,color .3s,transform .35s}
+.project-link:hover{background:var(--accent);border-color:var(--accent);color:var(--bg);transform:rotate(45deg)}
+
+/* Hidden class pour filtre */
+.project-card.hidden{display:none}
+
+/* ===== STATS ===== */
+.project-stats{background:var(--bg);padding:70px 6%;display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.pstat{text-align:center;padding:32px 20px;background:var(--surface);border:1px solid var(--border);border-radius:18px;transition:border-color .3s,transform .3s var(--ease)}
+.pstat:hover{border-color:rgba(0,229,255,.2);transform:translateY(-4px)}
+.pstat-num{font-family:var(--font-h);font-size:42px;font-weight:800;color:var(--txt);line-height:1;margin-bottom:6px}
+.pstat-num span{color:var(--accent)}
+.pstat-label{font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.8px}
+
+@media(max-width:1024px){.projects-grid{grid-template-columns:1fr 1fr}.project-card.featured{grid-column:span 1}.project-stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:768px){.projects-grid{grid-template-columns:1fr}.project-stats{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.project-stats{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<nav id="navbar">
+  <a href="index.html" class="logo">Ange<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="about.html">À propos</a></li>
+    <li><a href="skills.html">Compétences</a></li>
+    <li><a href="projects.html" class="active">Projets</a></li>
+    <li><a href="awards.html">Récompenses</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Me contacter</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Accueil</a>
+  <a href="about.html">À propos</a>
+  <a href="skills.html">Compétences</a>
+  <a href="projects.html" class="active">Projets</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-grid"></div>
+  <div class="page-orb page-orb-1"></div>
+  <div class="page-orb page-orb-2"></div>
+  <p class="page-hero-label">Portfolio</p>
+  <h1 class="page-hero-title">Ce que j'ai<br><em>construit</em>.</h1>
+  <p class="page-hero-sub"><strong>6 projets</strong> en ligne — du site vitrine à la plateforme de gestion universitaire.</p>
+</section>
+
+<!-- STATS -->
+<div class="project-stats">
+  <div class="pstat reveal"><div class="pstat-num">6<span>+</span></div><div class="pstat-label">Projets en ligne</div></div>
+  <div class="pstat reveal reveal-delay-1"><div class="pstat-num">3<span>+</span></div><div class="pstat-label">Technologies</div></div>
+  <div class="pstat reveal reveal-delay-2"><div class="pstat-num">2<span>ans</span></div><div class="pstat-label">d'expérience</div></div>
+  <div class="pstat reveal reveal-delay-3"><div class="pstat-num">100<span>%</span></div><div class="pstat-label">Projets livrés</div></div>
+</div>
+
+<!-- GRILLE PROJETS -->
+<section class="projects-main">
+
+  <!-- FILTRES -->
+  <div class="filters reveal">
+    <button class="filter-btn active" onclick="filterProjects('all')">Tous</button>
+    <button class="filter-btn" onclick="filterProjects('web')">Sites web</button>
+    <button class="filter-btn" onclick="filterProjects('app')">Applications</button>
+    <button class="filter-btn" onclick="filterProjects('interactive')">Interactif</button>
+  </div>
+
+  <div class="projects-grid" id="projectsGrid">
+
+    <!-- ===== PROJET 1 — Gestion universitaire (FEATURED) ===== -->
+    <div class="project-card featured reveal" data-cat="app">
+      <div class="project-thumb">
+        <img src="https://image.thum.io/get/width/1200/crop/600/http://gestion-universite.infinityfree.me/?i=1"
+             alt="Gestion universitaire" onerror="this.style.display='none'">
+        <div class="proj-placeholder">UNIVERSITÉ</div>
+        <div class="proj-overlay"></div>
+        <div class="project-tag">Projet phare</div>
+        <div class="live-badge"><span class="live-dot"></span>Live</div>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">Système de gestion universitaire</h3>
+        <p class="project-desc">Plateforme web complète multi-rôles (admin, professeurs, étudiants) pour gérer inscriptions, notes, absences et bulletins. Tableaux de bord interactifs, exports et notifications.</p>
+        <div class="project-footer">
+          <div class="project-techs">
+            <span class="tech-tag">PHP</span>
+            <span class="tech-tag">MySQL</span>
+            <span class="tech-tag">Bootstrap</span>
+            <span class="tech-tag">JS</span>
+          </div>
+          <a href="http://gestion-universite.infinityfree.me/?i=1" target="_blank" rel="noopener" class="project-link" title="Voir le projet">↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PROJET 2 — Projet PI ===== -->
+    <div class="project-card reveal reveal-delay-1" data-cat="app">
+      <div class="project-thumb">
+        <img src="https://image.thum.io/get/width/800/crop/500/https://tiefsalvador19.github.io/projetpi/"
+             alt="Projet PI" onerror="this.style.display='none'">
+        <div class="proj-placeholder">PI</div>
+        <div class="proj-overlay"></div>
+        <div class="project-tag">Application</div>
+        <div class="live-badge"><span class="live-dot"></span>Live</div>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">Projet PI</h3>
+        <p class="project-desc">Application web développée dans le cadre du projet d'intégration. Interface moderne et fonctionnalités avancées.</p>
+        <div class="project-footer">
+          <div class="project-techs">
+            <span class="tech-tag">HTML</span>
+            <span class="tech-tag">CSS</span>
+            <span class="tech-tag">JS</span>
+          </div>
+          <a href="https://tiefsalvador19.github.io/projetpi/" target="_blank" rel="noopener" class="project-link">↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PROJET 3 — Crêpe Time ===== -->
+    <div class="project-card reveal reveal-delay-2" data-cat="web">
+      <div class="project-thumb">
+        <img src="https://image.thum.io/get/width/800/crop/500/https://tiefsalvador19.github.io/Cr-pe-Time/"
+             alt="Crêpe Time" onerror="this.style.display='none'">
+        <div class="proj-placeholder">CRÊPE</div>
+        <div class="proj-overlay"></div>
+        <div class="project-tag">Site vitrine</div>
+        <div class="live-badge"><span class="live-dot"></span>Live</div>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">Crêpe Time</h3>
+        <p class="project-desc">Site vitrine moderne pour un restaurant. Menu animé, galerie photo, présentation des offres et formulaire de contact responsive.</p>
+        <div class="project-footer">
+          <div class="project-techs">
+            <span class="tech-tag">HTML</span>
+            <span class="tech-tag">CSS</span>
+            <span class="tech-tag">JS</span>
+          </div>
+          <a href="https://tiefsalvador19.github.io/Cr-pe-Time/" target="_blank" rel="noopener" class="project-link">↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PROJET 4 — Carte de l'Afrique ===== -->
+    <div class="project-card reveal reveal-delay-1" data-cat="interactive">
+      <div class="project-thumb">
+        <img src="https://image.thum.io/get/width/800/crop/500/https://tiefsalvador19.github.io/carte-de-l-Afrique/"
+             alt="Carte Afrique" onerror="this.style.display='none'">
+        <div class="proj-placeholder">AFRIQUE</div>
+        <div class="proj-overlay"></div>
+        <div class="project-tag">Interactif</div>
+        <div class="live-badge"><span class="live-dot"></span>Live</div>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">Carte interactive de l'Afrique</h3>
+        <p class="project-desc">Exploration web des 54 pays africains avec données détaillées (capitale, population, langue) et animations CSS fluides.</p>
+        <div class="project-footer">
+          <div class="project-techs">
+            <span class="tech-tag">HTML</span>
+            <span class="tech-tag">CSS</span>
+            <span class="tech-tag">JS</span>
+          </div>
+          <a href="https://tiefsalvador19.github.io/carte-de-l-Afrique/" target="_blank" rel="noopener" class="project-link">↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PROJET 5 — Carte du Monde ===== -->
+    <div class="project-card reveal reveal-delay-2" data-cat="interactive">
+      <div class="project-thumb">
+        <img src="https://image.thum.io/get/width/800/crop/500/https://tiefsalvador19.github.io/Copie-de-carte-du-monde/"
+             alt="Carte du Monde" onerror="this.style.display='none'">
+        <div class="proj-placeholder">MONDE</div>
+        <div class="proj-overlay"></div>
+        <div class="project-tag">Interactif</div>
+        <div class="live-badge"><span class="live-dot"></span>Live</div>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">Carte interactive du Monde</h3>
+        <p class="project-desc">Cartographie mondiale interactive — exploration des pays du monde entier avec informations géographiques et animations.</p>
+        <div class="project-footer">
+          <div class="project-techs">
+            <span class="tech-tag">HTML</span>
+            <span class="tech-tag">CSS</span>
+            <span class="tech-tag">JS</span>
+          </div>
+          <a href="https://tiefsalvador19.github.io/Copie-de-carte-du-monde/" target="_blank" rel="noopener" class="project-link">↗</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== PROJET 6 — Antenne CAFOP ===== -->
+    <div class="project-card reveal reveal-delay-3" data-cat="web">
+      <div class="project-thumb">
+        <img src="https://image.thum.io/get/width/800/crop/500/https://tiefsalvador19.github.io/Antenne-CAFOP/"
+             alt="Antenne CAFOP" onerror="this.style.display='none'">
+        <div class="proj-placeholder">CAFOP</div>
+        <div class="proj-overlay"></div>
+        <div class="project-tag">Institutionnel</div>
+        <div class="live-badge"><span class="live-dot"></span>Live</div>
+      </div>
+      <div class="project-body">
+        <h3 class="project-title">Antenne CAFOP</h3>
+        <p class="project-desc">Site institutionnel pour une antenne du Centre d'Animation et de Formation Pédagogique. Présentation des services et informations.</p>
+        <div class="project-footer">
+          <div class="project-techs">
+            <span class="tech-tag">HTML</span>
+            <span class="tech-tag">CSS</span>
+            <span class="tech-tag">JS</span>
+          </div>
+          <a href="https://tiefsalvador19.github.io/Antenne-CAFOP/" target="_blank" rel="noopener" class="project-link">↗</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /projects-grid -->
+</section>
+
+<!-- CTA -->
+<div style="padding:80px 6%;background:var(--bg);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:32px;border-top:1px solid var(--border)">
+  <div class="reveal">
+    <p class="section-label">Collaboration</p>
+    <h2 class="section-title" style="margin-bottom:8px">Un projet à <em>réaliser</em> ?</h2>
+    <p style="font-size:16px;color:var(--muted)">Je suis disponible pour de nouveaux projets.</p>
+  </div>
+  <div class="reveal reveal-delay-2">
+    <a href="contact.html" class="btn-primary">Me contacter <span class="arrow">↗</span></a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Ange<span>.</span></div>
+  <p class="footer-copy">© 2026 Ange Michel Ouraga</p>
+  <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" class="footer-back">↑ Haut de page</a>
+</footer>
+<div class="toast" id="toast"></div>
+<script src="shared.js"></script>
+<script>
+function filterProjects(cat) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.querySelectorAll('.project-card').forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+}
+</script>
+</body>
+</html>

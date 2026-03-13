@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compétences — Ange Michel Ouraga</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
+<style>
+/* ===== SKILLS PAGE ===== */
+.skills-main{padding:80px 6% 100px;background:var(--bg2)}
+.skills-layout{display:grid;grid-template-columns:300px 1fr;gap:60px;align-items:start}
+
+/* Sidebar navigation catégories */
+.skill-nav{position:sticky;top:100px;display:flex;flex-direction:column;gap:8px}
+.skill-nav-btn{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;border:none;background:none;color:var(--muted);font-family:var(--font-b);font-size:13px;font-weight:500;cursor:none;text-align:left;transition:background .3s,color .3s;width:100%}
+.skill-nav-btn:hover{background:var(--surface);color:var(--txt)}
+.skill-nav-btn.active{background:rgba(0,229,255,.08);color:var(--accent);border:1px solid rgba(0,229,255,.2)}
+.skill-nav-btn .nav-icon{font-size:18px;width:24px;text-align:center}
+
+/* Contenu compétences */
+.skill-section{margin-bottom:64px}
+.skill-section:last-child{margin-bottom:0}
+.skill-section-header{display:flex;align-items:center;gap:16px;margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.skill-section-icon{font-size:24px;width:48px;height:48px;background:rgba(0,229,255,.07);border:1px solid rgba(0,229,255,.15);border-radius:12px;display:flex;align-items:center;justify-content:center}
+.skill-section-title{font-family:var(--font-h);font-size:20px;font-weight:700;color:var(--txt)}
+.skill-section-count{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* Chips */
+.chip-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:32px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:var(--surface);border:1px solid var(--border);border-radius:100px;font-size:13px;font-weight:500;color:var(--txt);cursor:none;transition:border-color .3s,background .3s,transform .3s var(--ease),color .3s}
+.chip:hover{border-color:var(--accent);background:rgba(0,229,255,.06);color:var(--accent);transform:translateY(-3px)}
+.chip-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);opacity:.45}
+.chip:hover .chip-dot{opacity:1}
+.chip.level-expert{border-color:rgba(0,229,255,.3)}
+.chip.level-expert .chip-dot{background:var(--accent);opacity:1}
+.chip.level-inter{border-color:rgba(123,97,255,.25)}
+.chip.level-inter .chip-dot{background:var(--accent2);opacity:.8}
+
+/* Barres */
+.bars{display:flex;flex-direction:column;gap:18px}
+.bar-item{}
+.bar-header{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:500;color:var(--txt);margin-bottom:8px}
+.bar-pct{color:var(--accent);font-size:12px;font-weight:700}
+.bar-track{height:4px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden}
+.bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent2),var(--accent));width:0;transition:width 1.4s var(--ease)}
+
+/* ===== OUTILS ===== */
+.tools-band{padding:80px 6% 100px;background:var(--bg)}
+.tools-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
+.tool-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;text-align:center;transition:border-color .3s,transform .4s var(--ease)}
+.tool-card:hover{border-color:rgba(0,229,255,.2);transform:translateY(-4px)}
+.tool-emoji{font-size:32px;display:block;margin-bottom:12px}
+.tool-name{font-size:14px;font-weight:600;color:var(--txt);margin-bottom:4px}
+.tool-desc{font-size:12px;color:var(--muted)}
+
+/* ===== LEARNING ===== */
+.learning{padding:80px 6% 100px;background:var(--bg2)}
+.learning-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px}
+.learn-card{background:var(--surface);border:1px dashed rgba(0,229,255,.2);border-radius:16px;padding:24px;display:flex;align-items:center;gap:16px;transition:border-color .3s,background .3s}
+.learn-card:hover{border-color:rgba(0,229,255,.4);background:rgba(0,229,255,.03)}
+.learn-icon{font-size:24px;flex-shrink:0}
+.learn-name{font-size:15px;font-weight:600;color:var(--txt);margin-bottom:2px}
+.learn-desc{font-size:13px;color:var(--muted)}
+.learn-badge{margin-left:auto;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);background:rgba(123,97,255,.1);border:1px solid rgba(123,97,255,.2);padding:3px 10px;border-radius:100px;flex-shrink:0}
+
+@media(max-width:1024px){.skills-layout{grid-template-columns:1fr}.skill-nav{position:static;flex-direction:row;flex-wrap:wrap}.tools-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:768px){.tools-grid{grid-template-columns:repeat(2,1fr)}.learning-grid{grid-template-columns:1fr}}
+@media(max-width:480px){.tools-grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<nav id="navbar">
+  <a href="index.html" class="logo">Ange<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="about.html">À propos</a></li>
+    <li><a href="skills.html" class="active">Compétences</a></li>
+    <li><a href="projects.html">Projets</a></li>
+    <li><a href="awards.html">Récompenses</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Me contacter</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Accueil</a>
+  <a href="about.html">À propos</a>
+  <a href="skills.html" class="active">Compétences</a>
+  <a href="projects.html">Projets</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-grid"></div>
+  <div class="page-orb page-orb-1"></div>
+  <div class="page-orb page-orb-2"></div>
+  <p class="page-hero-label">Compétences</p>
+  <h1 class="page-hero-title">Mon <em>arsenal</em><br>technique.</h1>
+  <p class="page-hero-sub">Des compétences construites <strong>projet après projet</strong>, du frontend au design, toujours au service du résultat.</p>
+</section>
+
+<!-- COMPÉTENCES DÉTAIL -->
+<section class="skills-main">
+  <div class="skills-layout">
+
+    <!-- Sidebar -->
+    <div class="skill-nav reveal">
+      <button class="skill-nav-btn active" onclick="scrollTo('s-frontend')"><span class="nav-icon">🌐</span>Frontend</button>
+      <button class="skill-nav-btn" onclick="scrollTo('s-design')"><span class="nav-icon">🎨</span>Design</button>
+      <button class="skill-nav-btn" onclick="scrollTo('s-backend')"><span class="nav-icon">⚙️</span>Backend</button>
+      <button class="skill-nav-btn" onclick="scrollTo('s-bars')"><span class="nav-icon">📊</span>Niveaux</button>
+    </div>
+
+    <div>
+      <!-- Frontend -->
+      <div class="skill-section reveal" id="s-frontend">
+        <div class="skill-section-header">
+          <div class="skill-section-icon">🌐</div>
+          <div>
+            <div class="skill-section-title">Développement Frontend</div>
+            <div class="skill-section-count">5 compétences</div>
+          </div>
+        </div>
+        <div class="chip-grid">
+          <div class="chip level-expert"><span class="chip-dot"></span>HTML5</div>
+          <div class="chip level-expert"><span class="chip-dot"></span>CSS3 / SCSS</div>
+          <div class="chip level-inter"><span class="chip-dot"></span>JavaScript ES6+</div>
+          <div class="chip level-inter"><span class="chip-dot"></span>Responsive Design</div>
+          <div class="chip level-inter"><span class="chip-dot"></span>Animations CSS</div>
+        </div>
+      </div>
+
+      <!-- Design -->
+      <div class="skill-section reveal reveal-delay-1" id="s-design">
+        <div class="skill-section-header">
+          <div class="skill-section-icon">🎨</div>
+          <div>
+            <div class="skill-section-title">Design UI/UX</div>
+            <div class="skill-section-count">4 compétences</div>
+          </div>
+        </div>
+        <div class="chip-grid">
+          <div class="chip level-inter"><span class="chip-dot"></span>UI Design</div>
+          <div class="chip level-inter"><span class="chip-dot"></span>UX Research</div>
+          <div class="chip level-inter"><span class="chip-dot"></span>Figma</div>
+          <div class="chip level-inter"><span class="chip-dot"></span>Prototypage</div>
+        </div>
+      </div>
+
+      <!-- Backend & Outils -->
+      <div class="skill-section reveal reveal-delay-2" id="s-backend">
+        <div class="skill-section-header">
+          <div class="skill-section-icon">⚙️</div>
+          <div>
+            <div class="skill-section-title">Backend & Outils</div>
+            <div class="skill-section-count">6 compétences</div>
+          </div>
+        </div>
+        <div class="chip-grid">
+          <div class="chip level-inter"><span class="chip-dot"></span>PHP</div>
+          <div class="chip level-inter"><span class="chip-dot"></span>MySQL</div>
+          <div class="chip level-inter"><span class="chip-dot"></span>Bootstrap</div>
+          <div class="chip level-inter"><span class="chip-dot"></span>Git / GitHub</div>
+          <div class="chip"><span class="chip-dot"></span>VS Code</div>
+          <div class="chip"><span class="chip-dot"></span>GitHub Pages</div>
+        </div>
+      </div>
+
+      <!-- Barres de niveaux -->
+      <div class="skill-section reveal reveal-delay-3" id="s-bars">
+        <div class="skill-section-header">
+          <div class="skill-section-icon">📊</div>
+          <div>
+            <div class="skill-section-title">Niveaux de maîtrise</div>
+            <div class="skill-section-count">Auto-évaluation honnête</div>
+          </div>
+        </div>
+        <div class="bars bar-skills">
+          <div class="bar-item">
+            <div class="bar-header">HTML / CSS <span class="bar-pct">90%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="90"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-header">UI / UX Design <span class="bar-pct">80%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="80"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-header">JavaScript <span class="bar-pct">72%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="72"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-header">PHP / MySQL <span class="bar-pct">65%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="65"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-header">Git / GitHub <span class="bar-pct">60%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="60"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-header">Figma <span class="bar-pct">55%</span></div>
+            <div class="bar-track"><div class="bar-fill" data-width="55"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUTILS -->
+<section class="tools-band">
+  <p class="section-label reveal">Environnement</p>
+  <h2 class="section-title reveal reveal-delay-1">Mes <em>outils</em> du quotidien.</h2>
+  <div class="tools-grid">
+    <div class="tool-card reveal"><span class="tool-emoji">💻</span><div class="tool-name">VS Code</div><div class="tool-desc">Éditeur principal</div></div>
+    <div class="tool-card reveal reveal-delay-1"><span class="tool-emoji">🐙</span><div class="tool-name">GitHub</div><div class="tool-desc">Versioning & déploiement</div></div>
+    <div class="tool-card reveal reveal-delay-2"><span class="tool-emoji">🎨</span><div class="tool-name">Figma</div><div class="tool-desc">Design & prototypage</div></div>
+    <div class="tool-card reveal reveal-delay-3"><span class="tool-emoji">🌐</span><div class="tool-name">Chrome DevTools</div><div class="tool-desc">Debug & inspection</div></div>
+    <div class="tool-card reveal"><span class="tool-emoji">🐘</span><div class="tool-name">PHP</div><div class="tool-desc">Backend serveur</div></div>
+    <div class="tool-card reveal reveal-delay-1"><span class="tool-emoji">🗄️</span><div class="tool-name">MySQL</div><div class="tool-desc">Base de données</div></div>
+    <div class="tool-card reveal reveal-delay-2"><span class="tool-emoji">📦</span><div class="tool-name">Bootstrap</div><div class="tool-desc">Framework CSS</div></div>
+    <div class="tool-card reveal reveal-delay-3"><span class="tool-emoji">⚡</span><div class="tool-name">GitHub Pages</div><div class="tool-desc">Hébergement gratuit</div></div>
+  </div>
+</section>
+
+<!-- EN COURS D'APPRENTISSAGE -->
+<section class="learning">
+  <p class="section-label reveal">En cours</p>
+  <h2 class="section-title reveal reveal-delay-1">Ce que j'apprends <em>maintenant</em>.</h2>
+  <div class="learning-grid">
+    <div class="learn-card reveal">
+      <span class="learn-icon">⚛️</span>
+      <div><div class="learn-name">React.js</div><div class="learn-desc">Composants & state management</div></div>
+      <span class="learn-badge">En cours</span>
+    </div>
+    <div class="learn-card reveal reveal-delay-1">
+      <span class="learn-icon">🐍</span>
+      <div><div class="learn-name">Python</div><div class="learn-desc">Scripting & automatisation</div></div>
+      <span class="learn-badge">En cours</span>
+    </div>
+    <div class="learn-card reveal reveal-delay-2">
+      <span class="learn-icon">📱</span>
+      <div><div class="learn-name">Design Mobile-First</div><div class="learn-desc">UX pour applications mobiles</div></div>
+      <span class="learn-badge">En cours</span>
+    </div>
+    <div class="learn-card reveal reveal-delay-3">
+      <span class="learn-icon">🔐</span>
+      <div><div class="learn-name">Sécurité Web</div><div class="learn-desc">OWASP, validation, auth</div></div>
+      <span class="learn-badge">Prévu</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Ange<span>.</span></div>
+  <p class="footer-copy">© 2026 Ange Michel Ouraga</p>
+  <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" class="footer-back">↑ Haut de page</a>
+</footer>
+<div class="toast" id="toast"></div>
+<script src="shared.js"></script>
+<script>
+function scrollTo(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});}
+// Highlight nav btn on scroll
+const sections=['s-frontend','s-design','s-backend','s-bars'];
+const btns=document.querySelectorAll('.skill-nav-btn');
+window.addEventListener('scroll',()=>{
+  sections.forEach((id,i)=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    const r=el.getBoundingClientRect();
+    if(r.top<200&&r.bottom>0){btns.forEach(b=>b.classList.remove('active'));btns[i]?.classList.add('active');}
+  });
+},{passive:true});
+</script>
+</body>
+</html>

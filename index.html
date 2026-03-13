@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ange Michel Ouraga — Developer & UI/UX Designer</title>
+  <meta name="description" content="Portfolio d'Ange Michel Ouraga, UI/UX Designer & Web Developer basé à Abidjan.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="shared.css">
+  <style>
+    /* ===== HERO ===== */
+    #home {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 140px 6% 80px;
+      position: relative;
+      overflow: hidden
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: linear-gradient(rgba(255, 255, 255, .022) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .022) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 65% 65% at 50% 50%, black 25%, transparent 100%)
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none
+    }
+
+    .orb-1 {
+      width: 520px;
+      height: 520px;
+      right: -120px;
+      top: -100px;
+      background: radial-gradient(circle, rgba(0, 229, 255, .11) 0%, transparent 70%);
+      animation: orbFloat 13s ease-in-out infinite
+    }
+
+    .orb-2 {
+      width: 380px;
+      height: 380px;
+      left: 5%;
+      bottom: 5%;
+      background: radial-gradient(circle, rgba(123, 97, 255, .09) 0%, transparent 70%);
+      animation: orbFloat 13s ease-in-out -5s infinite
+    }
+
+    .orb-3 {
+      width: 280px;
+      height: 280px;
+      right: 22%;
+      bottom: 25%;
+      background: radial-gradient(circle, rgba(240, 192, 96, .07) 0%, transparent 70%);
+      animation: orbFloat 13s ease-in-out -9s infinite
+    }
+
+    .hero-inner {
+      max-width: 860px;
+      position: relative;
+      z-index: 2
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(0, 229, 255, .2);
+      background: rgba(0, 229, 255, .05);
+      padding: 7px 16px;
+      border-radius: 100px;
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: revealUp .8s var(--ease) .2s forwards
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s ease infinite
+    }
+
+    .hero-name {
+      font-family: var(--font-h);
+      font-size: clamp(50px, 8.5vw, 90px);
+      font-weight: 800;
+      line-height: .95;
+      letter-spacing: -2.5px;
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: revealUp 1s var(--ease) .4s forwards
+    }
+
+    .hero-name em {
+      font-style: normal;
+      -webkit-text-stroke: 1px rgba(255, 255, 255, .28);
+      color: transparent;
+      display: block
+    }
+
+    .hero-desc {
+      font-size: 18px;
+      font-weight: 300;
+      color: var(--muted);
+      max-width: 500px;
+      line-height: 1.85;
+      margin-bottom: 48px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: revealUp .9s var(--ease) .65s forwards
+    }
+
+    .hero-desc strong {
+      color: var(--txt);
+      font-weight: 500
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: revealUp .9s var(--ease) .85s forwards
+    }
+
+    /* Stats */
+    .hero-stats {
+      position: absolute;
+      right: 6%;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 36px;
+      opacity: 0;
+      animation: revealRight 1s var(--ease) 1s forwards
+    }
+
+    .stat-item {
+      text-align: right
+    }
+
+    .stat-num {
+      font-family: var(--font-h);
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--txt);
+      line-height: 1
+    }
+
+    .stat-num span {
+      color: var(--accent)
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-top: 2px
+    }
+
+    /* Scroll hint */
+    .scroll-hint {
+      position: absolute;
+      bottom: 36px;
+      left: 6%;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: revealUp 1s var(--ease) 1.3s forwards
+    }
+
+    .scroll-line {
+      width: 40px;
+      height: 1px;
+      background: var(--border);
+      position: relative;
+      overflow: hidden
+    }
+
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--accent);
+      animation: scrollSlide 2.2s var(--ease) 1.5s infinite
+    }
+
+    @keyframes scrollSlide {
+      0% {
+        left: -100%
+      }
+
+      100% {
+        left: 100%
+      }
+    }
+
+    @keyframes revealRight {
+      from {
+        opacity: 0;
+        transform: translateY(-50%) translateX(30px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0)
+      }
+    }
+
+    /* ===== PREVIEW PROJETS ===== */
+    #preview {
+      background: var(--bg2);
+      padding: 100px 6%
+    }
+
+    .preview-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      gap: 16px
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px
+    }
+
+    .prev-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      text-decoration: none;
+      cursor: none;
+      transition: border-color .4s, transform .5s var(--ease), box-shadow .5s;
+      display: flex;
+      flex-direction: column
+    }
+
+    .prev-card:hover {
+      border-color: rgba(0, 229, 255, .28);
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px rgba(0, 0, 0, .35)
+    }
+
+    .prev-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #0D1B2A, #1A2D45);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .prev-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      transition: transform .7s var(--ease)
+    }
+
+    .prev-card:hover .prev-thumb img {
+      transform: scale(1.05) translateY(-6px)
+    }
+
+    .prev-placeholder {
+      font-family: var(--font-h);
+      font-size: 36px;
+      font-weight: 800;
+      color: rgba(0, 229, 255, .1);
+      letter-spacing: -2px;
+      position: absolute;
+      user-select: none
+    }
+
+    .prev-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(160deg, transparent 50%, rgba(0, 0, 0, .5) 100%)
+    }
+
+    .prev-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(0, 229, 255, .1);
+      border: 1px solid rgba(0, 229, 255, .2);
+      padding: 4px 10px;
+      border-radius: 100px
+    }
+
+    .prev-body {
+      padding: 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column
+    }
+
+    .prev-title {
+      font-family: var(--font-h);
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--txt);
+      margin-bottom: 6px;
+      line-height: 1.3
+    }
+
+    .prev-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1
+    }
+
+    .prev-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border)
+    }
+
+    .prev-techs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap
+    }
+
+    .tech-tag {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--muted);
+      background: rgba(255, 255, 255, .04);
+      padding: 2px 8px;
+      border-radius: 100px;
+      border: 1px solid var(--border)
+    }
+
+    .prev-link {
+      font-size: 12px;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap .3s
+    }
+
+    .prev-link:hover {
+      gap: 8px
+    }
+
+    /* ===== CTA BAND ===== */
+    .cta-band {
+      background: var(--bg);
+      padding: 80px 6%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--border)
+    }
+
+    .cta-text {
+      font-family: var(--font-h);
+      font-size: clamp(28px, 4vw, 46px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -1px
+    }
+
+    .cta-text em {
+      font-style: normal;
+      color: var(--accent)
+    }
+
+    @media(max-width:1024px) {
+      .hero-stats {
+        display: none
+      }
+
+      .preview-grid {
+        grid-template-columns: 1fr 1fr
+      }
+    }
+
+    @media(max-width:768px) {
+      .preview-grid {
+        grid-template-columns: 1fr
+      }
+
+      .preview-header {
+        flex-direction: column;
+        align-items: flex-start
+      }
+
+      .cta-band {
+        flex-direction: column
+      }
+
+      .hero-name {
+        font-size: clamp(40px, 10vw, 62px)
+      }
+    }
+
+    @media(max-width:480px) {
+      .hero-actions {
+        flex-direction: column
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <nav id="navbar">
+    <a href="index.html" class="logo">Ange<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="about.html">À propos</a></li>
+      <li><a href="skills.html">Compétences</a></li>
+      <li><a href="projects.html">Projets</a></li>
+      <li><a href="awards.html">Récompenses</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="contact.html" class="nav-cta">Me contacter</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Accueil</a>
+    <a href="about.html">À propos</a>
+    <a href="skills.html">Compétences</a>
+    <a href="projects.html">Projets</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- HERO -->
+  <section id="home">
+    <div class="hero-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    <div class="hero-inner">
+      <div class="hero-tag"><span class="dot"></span>Disponible pour de nouveaux projets</div>
+      <h1 class="hero-name">Ange Michel<br><em>Ouraga</em></h1>
+      <p class="hero-desc"><strong>UI/UX Designer & Web Developer</strong> — je conçois des interfaces qui inspirent et
+        construis des expériences web qui <strong>marquent les esprits</strong>.</p>
+      <div class="hero-actions">
+        <a href="projects.html" class="btn-primary">Voir mes projets <span class="arrow">↗</span></a>
+        <a href="contact.html" class="btn-ghost">Me contacter</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">6<span>+</span></div>
+        <div class="stat-label">Projets réalisés</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">2<span>ans</span></div>
+        <div class="stat-label">d'expérience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">8<span>+</span></div>
+        <div class="stat-label">Technologies</div>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div><span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- APERÇU PROJETS -->
+  <section id="preview">
+    <div class="preview-header">
+      <div>
+        <p class="section-label reveal">Mes projets récents</p>
+        <h2 class="section-title reveal reveal-delay-1">Ce que j'ai <em>construit</em>.</h2>
+      </div>
+      <a href="projects.html" class="btn-ghost reveal reveal-delay-2">Voir tout →</a>
+    </div>
+    <div class="preview-grid">
+
+      <a href="http://gestion-universite.infinityfree.me/?i=1" target="_blank" rel="noopener" class="prev-card reveal">
+        <div class="prev-thumb">
+          <img src="https://image.thum.io/get/width/1200/crop/600/http://gestion-universite.infinityfree.me/?i=1"
+            alt="Gestion scolaire" onerror="this.style.display='none'">
+          <div class="prev-placeholder">ÉCOLE</div>
+          <div class="prev-overlay"></div>
+          <div class="prev-badge">Projet phare</div>
+        </div>
+        <div class="prev-body">
+          <div class="prev-title">Système de gestion universitaire</div>
+          <div class="prev-desc">Plateforme complète multi-rôles : élèves, notes, absences, bulletins.</div>
+          <div class="prev-footer">
+            <div class="prev-techs"><span class="tech-tag">PHP</span><span class="tech-tag">MySQL</span><span
+                class="tech-tag">JS</span></div>
+            <span class="prev-link">Voir ↗</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://tiefsalvador19.github.io/Cr-pe-Time/" target="_blank" rel="noopener"
+        class="prev-card reveal reveal-delay-1">
+        <div class="prev-thumb">
+          <img src="https://image.thum.io/get/width/800/crop/500/https://tiefsalvador19.github.io/Cr-pe-Time/"
+            alt="Crêpe Time" onerror="this.style.display='none'">
+          <div class="prev-placeholder">CRÊPE</div>
+          <div class="prev-overlay"></div>
+          <div class="prev-badge">Vitrine</div>
+        </div>
+        <div class="prev-body">
+          <div class="prev-title">Crêpe Time</div>
+          <div class="prev-desc">Site vitrine restaurant avec menu animé et formulaire de contact.</div>
+          <div class="prev-footer">
+            <div class="prev-techs"><span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span
+                class="tech-tag">JS</span></div>
+            <span class="prev-link">Voir ↗</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="https://tiefsalvador19.github.io/carte-de-l-Afrique/" target="_blank" rel="noopener"
+        class="prev-card reveal reveal-delay-2">
+        <div class="prev-thumb">
+          <img src="https://image.thum.io/get/width/800/crop/500/https://tiefsalvador19.github.io/carte-de-l-Afrique/"
+            alt="Carte Afrique" onerror="this.style.display='none'">
+          <div class="prev-placeholder">AFRICA</div>
+          <div class="prev-overlay"></div>
+          <div class="prev-badge">Interactif</div>
+        </div>
+        <div class="prev-body">
+          <div class="prev-title">Carte interactive de l'Afrique</div>
+          <div class="prev-desc">Exploration des 54 pays africains avec données et animations.</div>
+          <div class="prev-footer">
+            <div class="prev-techs"><span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span
+                class="tech-tag">JS</span></div>
+            <span class="prev-link">Voir ↗</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="cta-band">
+    <div class="reveal">
+      <p class="cta-text">Un projet en tête ?<br>Parlons-en <em>ensemble</em>.</p>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <a href="contact.html" class="btn-primary">Me contacter <span class="arrow">↗</span></a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-logo">Ange<span>.</span></div>
+    <p class="footer-copy">© 2026 Ange Michel Ouraga</p>
+    <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" class="footer-back">↑ Haut de
+      page</a>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+  <script src="shared.js"></script>
+  <script>
+    // Parallax orbs
+    window.addEventListener('mousemove', e => {
+      const x = (e.clientX / innerWidth - .5) * 18, y = (e.clientY / innerHeight - .5) * 18;
+      document.querySelectorAll('.orb').forEach((o, i) => { const f = (i + 1) * .35; o.style.transform = `translate(${x * f}px,${y * f}px)`; });
+    }, { passive: true });
+  </script>
+</body>
+
+</html>
